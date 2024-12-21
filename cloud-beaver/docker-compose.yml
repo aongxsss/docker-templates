@@ -1,0 +1,13 @@
+version: "3.8"
+
+volumes:
+    cloudbeaver: {}
+
+services:
+    cloudbeaver:
+        container_name: ${PROJECT_NAME}-cloudbeaver
+        image: dbeaver/cloudbeaver:latest
+        ports:
+            - 8978:8978
+        volumes:
+            - cloudbeaver:/opt/cloudbeaver/workspace
