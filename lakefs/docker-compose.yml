@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+    lakefs:
+        image: treeverse/lakefs:1.7.0
+        container_name: lakefs
+        environment:
+            LAKEFS_DATABASE_TYPE: "local"
+            LAKEFS_INSTALLATION_ACCESS_KEY_ID: "access_key"
+            LAKEFS_INSTALLATION_SECRET_ACCESS_KEY: "secret_key"
+            LAKEFS_AUTH_ENCRYPT_SECRET_KEY: "wait"
+            LAKEFS_BLOCKSTORE_TYPE: "local"
+        ports:
+            - "8000:8000"
+        networks:
+            - db_network
+networks:
+    db_network:
+        driver: bridge
