@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+    selenium:
+        image: selenium/standalone-chrome:latest
+        container_name: selenium
+        ports:
+            - "4444:4444"
+        shm_size: "1gb" #default is 64mb
+
+    jupyter:
+        image: jupyter/base-notebook:latest
+        container_name: jupyter_notebook
+        ports:
+            - "8888:8888"
+        volumes:
+            - ./notebooks:/home/jovyan/work
+        environment:
+            - JUPYTER_TOKEN=aong
+        depends_on:
+            - selenium
