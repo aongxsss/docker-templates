@@ -1,1 +1,3 @@
 */.env
+selenium/chromedriver-win64
+selenium/notebooks/.ipynb_checkpoints
