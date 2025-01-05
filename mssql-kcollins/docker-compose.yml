@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+    db:
+        image: kcollins/mssql:latest
+        ports:
+            - 1433:1433
+        volumes:
+            - db_data:/var/opt/mssql
+            - ./db-backups:/backups
+            - ./db-init:/docker-entrypoint-initdb.d
+
+        environment:
+            # ACCEPT_EULA confirms your acceptance of the End-User Licensing Agreement.
+            ACCEPT_EULA: Y
+            MSSQL_SA_PASSWORD: StrongPassword123
+            MSSQL_DATABASE: test
+            MSSQL_USER: testuser
+            MSSQL_PASSWORD: TestUserPassword123
+            MSSQL_PID: Developer # Change to the edition you need, e.g. "Express", "Standard", etc.
+volumes:
+    db_data:

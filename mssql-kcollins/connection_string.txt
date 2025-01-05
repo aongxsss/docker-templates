@@ -1,0 +1,4 @@
+#example connection_string
+connection_string = "mssql+pymssql://testuser:<password>@localhost:1433/test"
+#example login
+sqlcmd -S localhost -U SA -P "StrongPassword123" -C
