@@ -1,0 +1,49 @@
+version: "3.8"
+
+services:
+    jupyter:
+        image: jupyter/base-notebook:latest
+        container_name: jupyter_notebook
+        ports:
+            - "8888:8888"
+        volumes:
+            # - ./news-pipelines:/home/jovyan/work
+        environment:
+            - JUPYTER_TOKEN=aong
+    db:
+        image: postgres:16.3-alpine
+        environment:
+            POSTGRES_USER: airflow
+            POSTGRES_PASSWORD: airflow
+            POSTGRES_DB: airflow
+        volumes:
+        - db:/var/lib/postgresql/data
+
+    airflow-webserver:
+        build: airflow
+        command: ["bash", "run-web.sh"]
+        volumes:
+            - ./airflow/run-web.sh:/adminairflow/run-web.sh
+            - ./airflow/requirements.txt:/airflow/requirements.txt
+
+        ports:
+            - 8080:8080
+        env_file:
+            - .env
+
+    airflow-scheduler:
+        build: airflow
+        command: ["bash", "run-scheduler.sh"]
+        env_file:
+            - .env
+        volumes:
+            - ./airflow/run-scheduler.sh:/airflow/run-scheduler.sh
+            - ./airflow/requirements.txt:/airflow/requirements.txt
+            # - ./news-pipelines:/airflow/dags/
+
+networks:
+  default:
+    name: dev
+
+volumes:
+  db: {}
